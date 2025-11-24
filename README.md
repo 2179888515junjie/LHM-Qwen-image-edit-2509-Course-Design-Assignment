@@ -390,9 +390,9 @@ It can be seen that using the Sam2+Qwem model for segmentation and preprocessing
 ##  🤔  prospect
 In fact, it can be found that the original intention of this task is to optimize the robustness of LHM in generating 3D digital humans
 This experiment actually attempted to use the SDV-1.5 diffusion model, but the results were not satisfactory
-With the introduction of Qwen Image-Edit-2509, the generation effect of the experiment was significantly improved, but at the same time, it also brought about shortcomings
-① Generation time growth
-② High usage of video memory
+With the introduction of Qwen Image-Edit-2509, the generation effect of the experiment was significantly improved, but at the same time, it also brought about shortcomings  
+① Generation time growth  
+② High usage of video memory  
 Future research could consider optimizing input images in a way that balances performance and cost
 
 
