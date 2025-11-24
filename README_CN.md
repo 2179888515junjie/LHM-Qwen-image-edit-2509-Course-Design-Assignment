@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="/assets/bucea.jpg">
+  <img src="./assets/bucea.jpg">
   <br>
   基于 LHM 与 Qwen 模型的三维数字人生成 
 </h1>
