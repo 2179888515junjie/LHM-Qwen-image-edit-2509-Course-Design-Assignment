@@ -396,7 +396,7 @@ With the introduction of Qwen Image-Edit-2509, the generation effect of the expe
 Future research could consider optimizing input images in a way that balances performance and cost
 
 
-##Thank you
+##  Thank you
 
 This work is based on the following excellent research results and open-source projects:
 
