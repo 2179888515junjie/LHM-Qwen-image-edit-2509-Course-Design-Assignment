@@ -14,9 +14,9 @@
 
 
 ## 📢 最新动态
-**[2025年11月24日]** 我开始了这个课设readme的编写<br>
-**[2025年11月23日]** 我成功完成了本地Qwen-Image-Edit-2059模型部署以及分布基于2块48G显存GPU生成代码<br>
-**[2025年11月19日]** 我成功完成了基于Qwen-Image API接口调用模型链接LHM生成代码<br>
+**[2025年11月24日]** 我开始了这个课设 readme 的编写<br>
+**[2025年11月23日]** 我成功完成了本地 Qwen-Image-Edit-2059 模型部署以及分布基于2块48G显存GPU生成代码<br>
+**[2025年11月19日]** 我成功完成了基于 Qwen-Image API 接口调用模型 LHM 生成代码<br>
 
 
 
@@ -40,14 +40,13 @@
 | CPU | AutoDL 默认配置 | - | - |
 | 系统 | Ubuntu 20.04 / Miniconda | - | - |
 > 💡 **说明：**  
+>由于基于Autodl，代码中部分路径包含Autodl-tmp，可以按需更改文件名  
 > LHM-1B / LHM-500M 在本机两张 48GB GPU 上均可稳定运行；  
 > Qwen-Image-Edit-2509（本地版）推理需要单卡至少 **48GB 显存** 才能完全加载模型。
 > 采用本地推理时占用显存数据如下图所示
+  
 <img src="./assets/xiancun.png" />
-
-
-
-
+  
 
 1.克隆仓库
 ```bash
@@ -85,19 +84,21 @@ pip install rembg
 ```
 本环境使用的关键库版本：
 
-> torch==2.3.0+cu118
-> diffusers==0.36.0.dev0
-> mmcv / mmpose / pytorch3d
-> SAM2 (pip install sam-2)
-> accelerate==0.25
-
-numpy==1.23.5
+> torch==2.3.0+cu118  
+> diffusers==0.36.0.dev0  
+> mmcv / mmpose / pytorch3d  
+> SAM2 (pip install sam-2)  
+> accelerate==0.25  
+> numpy==1.23.5
 
 此环境已经过 48GB GPU、CUDA 11.8 实测验证，可稳定运行 LHM Pipeline。
 
+
 3.创建环境2：qwen_img（用于本地 Qwen-Image-Edit-2509 推理）
 
-**创建环境**
+**创建环境**  
+<span style="color:yellow">强烈建议采用 Qwen 官方推荐的 diffusers</span>
+
 ```
 conda create -n qwen_img python=3.10
 conda activate qwen_img
@@ -115,6 +116,16 @@ pip install transformers accelerate
 
 pip install safetensors pillow
 ```
+**若出现"TypeError: scaled_dot_product_attention() got an unexpected keyword argument 'enable_gqa'"报错**  
+如果不想改环境版本的话，可以打个补丁，暂时禁用参数： 
+> import torch.nn.functional as F
+> original_scaled_dot_product_attention = F.scaled_dot_product_attention  
+> def patched_scaled_dot_product_attention(*args, **kwargs):  
+> 移除 enable_gqa 参数  
+> kwargs.pop('enable_gqa', None)  
+> return original_scaled_dot_product_attention(*args, **kwargs)   
+> F.scaled_dot_product_attention = patched_scaled_dot_product_attention
+
 
 
 ### LHM模型下载 
@@ -152,7 +163,7 @@ tar -xvf LHM_prior_model.tar
 ```
 
 ### 动作数据准备
-我们提供了测试动作示例：
+LHM 提供了测试动作示例：
 ```bash
 # 下载先验模型权重
 wget https://virutalbuy-public.oss-cn-hangzhou.aliyuncs.com/share/aigc3d/data/LHM/motion_video.tar
@@ -219,7 +230,7 @@ model_dir = snapshot_download(
 
 下载完成后Qwen-Image-Edit-2509模型文件结构如下：
 ```bash
-Qwen-Image-Edit-2509/
+Qwen-Image-Edit-2509
 ├── processor
 │   ├── added_tokens.json
 │   ├── chat_template.jinja
@@ -275,6 +286,7 @@ Qwen-Image-Edit-2509/
 >模型本身内容进行省略
 >主要工作文件已经由✅️标出
 ```bash
+Autodl-tmp
 ├── LHM                                  # 🟩 本课设的主工程
 │   ├── qwen_2509.py                     # ✅️ Qwen 本地调用脚本
 │   ├── Qwen_API.py                      # ✅️ Qwen API版本
@@ -337,22 +349,51 @@ Qwen-Image-Edit-2509/
 ├── diff-gaussian-rasterization-main/
 ├── qwen_image_edit_api.py               # ✅️ 调用API脚本，请输入自己的API
 └── tools/
-
 ```
 ## 💻 本地部署 
 我们现在支持用户调用阿里 Qwen-Image API来生成图片，只需要用户在"qwen_image_edit_api.py"文件中，写入自己的APIkey。  
 申请链接：https://cn.aliyun.com/product/tongyi?from_alibabacloud=&utm_content=se_1021898286
 ```bash
-#
 # 调用Qwen_API生成图片
 python ./Qwen_API.py 
 # 调用本地Qwen模型生成图片
 python ./Qwen_2509.py  
-
 ```
 
 ## 👀 效果与展示
+下图为运行 Qwen_API.py   
+基于Qwen-Image API 生成的图片与经过 Sam2 分割后的结果
+  
+<img src="./assets/QwenAPi.png" />
 
+下图为运行 Qwen_2509.py
+基于Qwen-Image-Edit-2509 生成的图片与经过 Sam2 分割后的结果
+  
+<img src="./assets/Qwen2509.png" />  
+  
+可以看到，采用了扩散模型对原本输入文件进行预处理后，效果明显提升了  
+下图为对比实验  
+  
+
+<img src="./assets/ablation1.png" />  
+  
+可以看到采用了 Qwen 模型之后的生成质量是最高的  
+
+
+下图为消融实验  
+  
+  <img src="./assets/ablation2.png" />  
+  
+  可以看到采用 Sam2 + Qwem模型 进行分割与预处理的效果是最佳的
+
+
+## 🤔 展望
+其实可以发现，本任务的初衷是想优化 LHM 生成3D数字人的鲁棒性  
+本实验其实还做了基于sdv-1.5扩散模型的尝试，但是效果实属不佳  
+在引入了 Qwen-Image-Edit-2509 的情况下，实验的生成效果大幅提升，但同时也带来了不足  
+① 生成时间增长  
+② 占用显存较高  
+未来的研究可以考虑一个性能与代价均衡的方式将输入的图片优化  
 
 
 ## 致谢
@@ -360,3 +401,4 @@ python ./Qwen_2509.py
 本工作基于以下优秀研究成果和开源项目构建：
 
 - [LHM](https://github.com/aigc3d/LHM)
+- [IDOL](https://yiyuzhuang.github.io/IDOL/)
