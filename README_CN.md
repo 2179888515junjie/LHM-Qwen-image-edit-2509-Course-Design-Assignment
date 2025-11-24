@@ -10,7 +10,6 @@
 </p>
 
 [![项目主页](https://img.shields.io/badge/🌐-项目主页-blueviolet)](https://github.com/2179888515junjie/LHM-Qwen-image-edit-2509-Course-Design-Assignment)
-[![arXiv论文](https://img.shields.io/badge/📜-arXiv:2503-10625)](https://arxiv.org/pdf/2503.10625)
 
 
 
@@ -44,7 +43,7 @@
 > LHM-1B / LHM-500M 在本机两张 48GB GPU 上均可稳定运行；  
 > Qwen-Image-Edit-2509（本地版）推理需要单卡至少 **48GB 显存** 才能完全加载模型。
 > 采用本地推理时占用显存数据如下图所示
-<img src="./assets/xiancun.png" height="38" />
+<img src="./assets/xiancun.png" />
 
 
 
