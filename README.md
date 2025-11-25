@@ -39,7 +39,7 @@ The actual operating environment of this project is as follows:
 |CUDA Version | CUDA 13.0 | - | Driver 580.76.05|
 |CPU | AutoDL default configuration | - | -|
 |System | Ubuntu 20.04/Miniconda | - | -|
->  💡 ** Explanation:**
+>  💡  Explanation:    
 >Due to being based on Autodl, some paths in the code contain Autodl tmp, and file names can be changed as needed
 >LHM-1B/LHM-500M can run stably on both 48GB GPUs of this machine;   
 >The Qwen-Imag-Edit-2509 (local version) inference requires at least 48GB of video memory on a single card to fully load the model.
@@ -129,7 +129,7 @@ If you don't want to change the environment version, you can apply a patch to te
 
 
 
-###LHM Model Download
+### LHM Model Download
 
 
 If you haven't downloaded the model, it will be automatically downloaded</span>
@@ -145,7 +145,7 @@ If you haven't downloaded the model, it will be automatically downloaded</span>
 
 
 
-####Download from HuggingFace
+#### Download from HuggingFace
 ```python
 from huggingface_hub import snapshot_download 
 # MINI Model
@@ -156,14 +156,14 @@ model_dir = snapshot_download(repo_id='3DAIGC/LHM-500M-HF', cache_dir='./pretrai
 model_dir = snapshot_download(repo_id='3DAIGC/LHM-1B-HF', cache_dir='./pretrained_models/huggingface')
 ```
 
-###Download prior model weights
+### Download prior model weights
 ```bash
 #Download prior model weights
 wget  https://virutalbuy-public.oss-cn-hangzhou.aliyuncs.com/share/aigc3d/data/LHM/LHM_prior_model.tar  
 tar -xvf LHM_prior_model.tar 
 ```
 
-###Action data preparation
+### Action data preparation
 LHM provides test action examples:
 ```bash
 #Download prior model weights
@@ -218,7 +218,7 @@ After downloading, the LHM file structure is as follows:
 ├── requirements.txt
 ```
 
-###Qwen Image-Edit-2509 model download
+### Qwen Image-Edit-2509 model download
 ```python
 from huggingface_hub import snapshot_download
 
